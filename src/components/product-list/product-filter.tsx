@@ -1,4 +1,4 @@
-import { useCallback } from 'react';
+import { useCallback, useMemo } from 'react';
 import Radio from '@mui/material/Radio';
 import Stack from '@mui/material/Stack';
 import Badge from '@mui/material/Badge';
@@ -72,118 +72,129 @@ export default function ProductFilters({
     [onFilters],
   );
 
-  const renderHead = (
-    <Stack
-      direction="row"
-      alignItems="center"
-      justifyContent="space-between"
-      sx={{ py: 2, pr: 1, pl: 2.5 }}
-    >
-      <Typography variant="h6" sx={{ flexGrow: 1 }}>
-        Filters
-      </Typography>
+  const renderHead = useMemo(
+    () => (
+      <Stack
+        direction="row"
+        alignItems="center"
+        justifyContent="space-between"
+        sx={{ py: 2, pr: 1, pl: 2.5 }}
+      >
+        <Typography variant="h6" sx={{ flexGrow: 1 }}>
+          Filters
+        </Typography>
 
-      <Tooltip title="Reset">
-        <IconButton onClick={onResetFilters}>
-          <Badge color="error" variant="dot" invisible={!canReset}>
-            <Iconify icon="solar:restart-bold" />
-          </Badge>
+        <Tooltip title="Reset">
+          <IconButton onClick={onResetFilters}>
+            <Badge color="error" variant="dot" invisible={!canReset}>
+              <Iconify icon="solar:restart-bold" />
+            </Badge>
+          </IconButton>
+        </Tooltip>
+
+        <IconButton onClick={onClose}>
+          <Iconify icon="mingcute:close-line" />
         </IconButton>
-      </Tooltip>
-
-      <IconButton onClick={onClose}>
-        <Iconify icon="mingcute:close-line" />
-      </IconButton>
-    </Stack>
+      </Stack>
+    ),
+    [canReset, onClose, onResetFilters],
   );
 
-  const renderCategory = (
-    <Stack>
-      <Typography variant="subtitle2" sx={{ mb: 1 }}>
-        Category
-      </Typography>
-      {categoryOptions.map((option) => (
-        <FormControlLabel
-          key={option}
-          control={
-            <Radio
-              checked={option === filters.category}
-              onClick={() => handleFilterCategory(option)}
-            />
-          }
-          label={option.charAt(0).toUpperCase() + option.slice(1)}
+  const renderCategory = useMemo(
+    () => (
+      <Stack>
+        <Typography variant="subtitle2" sx={{ mb: 1 }}>
+          Category
+        </Typography>
+        {categoryOptions.map((option) => (
+          <FormControlLabel
+            key={option}
+            control={
+              <Radio
+                checked={option === filters.category}
+                onClick={() => handleFilterCategory(option)}
+              />
+            }
+            label={option.charAt(0).toUpperCase() + option.slice(1)}
+            sx={{
+              ...(option === 'all' && {
+                textTransform: 'capitalize',
+              }),
+            }}
+          />
+        ))}
+      </Stack>
+    ),
+    [categoryOptions, filters.category, handleFilterCategory],
+  );
+  const renderPrice = useMemo(
+    () => (
+      <Stack>
+        <Typography variant="subtitle2" sx={{ flexGrow: 1 }}>
+          Price
+        </Typography>
+
+        <Stack direction="row" spacing={5} sx={{ my: 2 }}>
+          <InputRange
+            type="min"
+            value={filters.priceRange}
+            onFilters={onFilters}
+          />
+          <InputRange
+            type="max"
+            value={filters.priceRange}
+            onFilters={onFilters}
+          />
+        </Stack>
+
+        <Slider
+          value={filters.priceRange}
+          onChange={handleFilterPriceRange}
+          step={10}
+          min={0}
+          max={200}
+          marks={marksLabel}
+          getAriaValueText={(value) => `$${value}`}
+          valueLabelFormat={(value) => `$${value}`}
           sx={{
-            ...(option === 'all' && {
-              textTransform: 'capitalize',
-            }),
+            alignSelf: 'center',
+            width: `calc(100% - 24px)`,
           }}
-        />
-      ))}
-    </Stack>
-  );
-
-  const renderPrice = (
-    <Stack>
-      <Typography variant="subtitle2" sx={{ flexGrow: 1 }}>
-        Price
-      </Typography>
-
-      <Stack direction="row" spacing={5} sx={{ my: 2 }}>
-        <InputRange
-          type="min"
-          value={filters.priceRange}
-          onFilters={onFilters}
-        />
-        <InputRange
-          type="max"
-          value={filters.priceRange}
-          onFilters={onFilters}
         />
       </Stack>
-
-      <Slider
-        value={filters.priceRange}
-        onChange={handleFilterPriceRange}
-        step={10}
-        min={0}
-        max={200}
-        marks={marksLabel}
-        getAriaValueText={(value) => `$${value}`}
-        valueLabelFormat={(value) => `$${value}`}
-        sx={{
-          alignSelf: 'center',
-          width: `calc(100% - 24px)`,
-        }}
-      />
-    </Stack>
+    ),
+    [filters.priceRange, handleFilterPriceRange, marksLabel, onFilters],
   );
 
-  const renderRating = (
-    <Stack spacing={2} alignItems="flex-start">
-      <Typography variant="subtitle2">Rating</Typography>
+  const renderRating = useMemo(
+    () => (
+      <Stack spacing={2} alignItems="flex-start">
+        <Typography variant="subtitle2">Rating</Typography>
 
-      {ratingOptions.map((item, index) => (
-        <Stack
-          key={item}
-          direction="row"
-          onClick={() => handleFilterRating(item)}
-          sx={{
-            borderRadius: 1,
-            cursor: 'pointer',
-            typography: 'body2',
-            '&:hover': { opacity: 0.48 },
-            ...(filters.rating === item && {
-              pl: 0.5,
-              pr: 0.75,
-              py: 0.25,
-              bgcolor: 'action.selected',
-            }),
-          }}
-        >
-          <Rating readOnly value={4 - index} sx={{ mr: 1 }} /> & Up
-        </Stack>
-      ))}
-    </Stack>
+        {ratingOptions.map((item, index) => (
+          <Stack
+            key={item}
+            direction="row"
+            onClick={() => handleFilterRating(item)}
+            sx={{
+              borderRadius: 1,
+              cursor: 'pointer',
+              typography: 'body2',
+              '&:hover': { opacity: 0.48 },
+              ...(filters.rating === item && {
+                pl: 0.5,
+                pr: 0.75,
+                py: 0.25,
+                bgcolor: 'action.selected',
+              }),
+            }}
+          >
+            <Rating readOnly value={4 - index} sx={{ mr: 1 }} /> & Up
+          </Stack>
+        ))}
+      </Stack>
+    ),
+    [filters.rating, handleFilterRating, ratingOptions],
   );
 
   return (
@@ -200,7 +211,6 @@ export default function ProductFilters({
       >
         Filters
       </Button>
-
       <Drawer
         anchor="right"
         open={open}
@@ -213,22 +223,16 @@ export default function ProductFilters({
         }}
       >
         {renderHead}
-
         <Divider />
-
         <Stack spacing={3} sx={{ px: 2.5, py: 3 }}>
           {renderCategory}
-
           {renderPrice}
-
           {renderRating}
         </Stack>
       </Drawer>
     </>
   );
 }
-
-// ----------------------------------------------------------------------
 
 type InputRangeProps = {
   type: 'min' | 'max';

@@ -4,7 +4,6 @@ import { Container, Typography } from '@mui/material';
 import useProductService from '../hook/useProductService';
 import { ProductList } from '../components';
 import { IProduct } from '../types/product';
-import MainLayout from '../layouts/main-layout';
 
 export default function HomePage() {
   const [products, setProducts] = useState<IProduct[]>([]);

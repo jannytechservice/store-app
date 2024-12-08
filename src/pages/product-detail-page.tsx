@@ -3,7 +3,6 @@ import { Container } from '@mui/material';
 
 import useProductService from '@/hook/useProductService';
 import { IProduct } from '@/types/product';
-import MainLayout from '@/layouts/main-layout';
 import { ProductDetail } from '@/components';
 import { useParams } from '@/routes/hook';
 
