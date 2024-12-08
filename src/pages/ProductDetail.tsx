@@ -1,5 +1,38 @@
+import { useCallback, useEffect, useState } from 'react';
+
+import useProductService from '@/hook/useProductService';
+import { IProduct } from '@/types/product';
+import MainLayout from '@/layouts/MainLayout';
+import ProductDetail from '@/components/ProductDetail';
+import { useParams } from '@/routes/hook';
+
 const ProductDetailPage = () => {
-  return <div>dssfdfsd</div>;
+  const { id } = useParams();
+  const [loading, setLoading] = useState(true);
+  const [product, setProduct] = useState<IProduct>();
+  const { getProduct } = useProductService();
+  const fetchProduct = useCallback(async () => {
+    try {
+      if (id) {
+        const response = await getProduct(id);
+        setProduct(response);
+      }
+    } catch (e) {
+      console.error(e);
+    } finally {
+      setLoading(false);
+    }
+  }, [getProduct, id]);
+
+  useEffect(() => {
+    fetchProduct();
+  }, []);
+
+  return (
+    <MainLayout loading={loading}>
+      {product && <ProductDetail product={product} />}
+    </MainLayout>
+  );
 };
 
 export default ProductDetailPage;
