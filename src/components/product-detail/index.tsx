@@ -3,15 +3,15 @@ import { Grid } from '@mui/material';
 import { IProduct } from '@/types/product';
 import { paths } from '@/routes/path';
 
-import ProductDetailImage from './ProductDetailImage';
-import ProductDetailSummary from './ProductDetailSummary';
-import ProductDetailToolbar from './ProductDetailToolbar';
+import ProductDetailImage from './product-detail-image';
+import ProductDetailSummary from './product-detail-summary';
+import ProductDetailToolbar from './product-detail-toolbar';
 
-type Props = {
+type ProductDetailProps = {
   product: IProduct;
 };
 
-export default function ProductDetail({ product }: Props) {
+export default function ProductDetail({ product }: ProductDetailProps) {
   return (
     <>
       <ProductDetailToolbar backLink={paths.home} />

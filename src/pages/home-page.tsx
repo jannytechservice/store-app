@@ -1,9 +1,9 @@
 import { useCallback, useEffect, useState } from 'react';
 
 import useProductService from '../hook/useProductService';
-import ProductList from '../components/ProductList';
+import { ProductList } from '../components';
 import { IProduct } from '../types/product';
-import MainLayout from '../layouts/MainLayout';
+import MainLayout from '../layouts/main-layout';
 
 const HomePage = () => {
   const [products, setProducts] = useState<IProduct[]>([]);

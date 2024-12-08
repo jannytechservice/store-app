@@ -11,7 +11,7 @@ import { useRouter } from '../../routes/hook';
 import Iconify from '../../common/iconify';
 import { IProduct } from '../../types/product';
 
-import SearchNotFound from './SearchNotFound';
+import SearchNotFound from './searhc-not-found';
 
 type Props = {
   query: string;

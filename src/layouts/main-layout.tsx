@@ -5,7 +5,7 @@ import MainLoader from '../common/loader/MainLoader';
 
 interface MainLayoutProps {
   children: React.ReactNode;
-  loading: boolean;
+  loading?: boolean;
 }
 
 const MainLayout: React.FC<MainLayoutProps> = ({ children, loading }) => {

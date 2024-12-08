@@ -3,9 +3,10 @@ import Card from '@mui/material/Card';
 import Stack from '@mui/material/Stack';
 import ListItemText from '@mui/material/ListItemText';
 
-import Image from '../common/image';
-import { IProduct } from '../types/product';
-import RouterLink from '../routes/router-link';
+import { RouterLink } from '@/routes/components';
+
+import Image from '../../common/image';
+import { IProduct } from '../../types/product';
 
 // ----------------------------------------------------------------------
 
@@ -14,7 +15,7 @@ type Props = {
 };
 
 export default function ProductCard({ product }: Props) {
-  const { title, image } = product;
+  const { id, title, image } = product;
 
   const renderImages = (
     <Stack
@@ -40,7 +41,7 @@ export default function ProductCard({ product }: Props) {
         p: (theme) => theme.spacing(2.5, 2.5, 2, 2.5),
       }}
       secondary={
-        <Link component={RouterLink} href="/dsdsffds" color="inherit">
+        <Link component={RouterLink} href={`/products/${id}`} color="inherit">
           {title}
         </Link>
       }

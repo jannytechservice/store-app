@@ -2,11 +2,11 @@ import { lazy, Suspense } from 'react';
 import { BrowserRouter, Outlet, useRoutes } from 'react-router-dom';
 
 import MainLoader from '@/common/loader/MainLoader';
-import MainLayout from '@/layouts/MainLayout';
+import MainLayout from '@/layouts/main-layout';
 
 function AppRouter() {
-  const LazyHomePage = lazy(() => import('@/pages/Home'));
-  const LazyProductDetailPage = lazy(() => import('@/pages/ProductDetail'));
+  const LazyHomePage = lazy(() => import('@/pages/home-page'));
+  const LazyProductDetailPage = lazy(() => import('@/pages/product-detail-page'));
 
   return useRoutes([
     {

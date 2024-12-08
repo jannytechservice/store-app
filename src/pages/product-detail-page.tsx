@@ -2,8 +2,8 @@ import { useCallback, useEffect, useState } from 'react';
 
 import useProductService from '@/hook/useProductService';
 import { IProduct } from '@/types/product';
-import MainLayout from '@/layouts/MainLayout';
-import ProductDetail from '@/components/ProductDetail';
+import MainLayout from '@/layouts/main-layout';
+import { ProductDetail } from '@/components';
 import { useParams } from '@/routes/hook';
 
 const ProductDetailPage = () => {

@@ -2,11 +2,13 @@ import { Box, Rating, Stack, Typography } from '@mui/material';
 
 import { IProduct } from '@/types/product';
 
-type Props = {
+type ProductDetailSummaryProps = {
   product: IProduct;
 };
 
-export default function ProductDetailSummary({ product }: Props) {
+export default function ProductDetailSummary({
+  product,
+}: ProductDetailSummaryProps) {
   const renderPrice = (
     <Box sx={{ typography: 'h5' }}>{`$${product.price}`}</Box>
   );

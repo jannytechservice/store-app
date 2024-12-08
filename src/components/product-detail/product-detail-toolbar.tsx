@@ -3,7 +3,7 @@ import { Box, Button, Stack, StackProps } from '@mui/material';
 import Iconify from '@/common/iconify';
 import { RouterLink } from '@/routes/components';
 
-type Props = StackProps & {
+type ProductDetailToolbarProps = StackProps & {
   backLink: string;
 };
 
@@ -11,7 +11,7 @@ export default function ProductDetailToolbar({
   backLink,
   sx,
   ...other
-}: Props) {
+}: ProductDetailToolbarProps) {
   return (
     <Stack
       spacing={1.5}

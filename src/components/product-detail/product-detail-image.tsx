@@ -4,11 +4,11 @@ import { useTheme } from '@mui/material/styles';
 
 import Image from '@/common/image';
 
-type Props = {
+type ProductDetailImageProps = {
   src: string;
 };
 
-export default function ProductDetailImage({ src }: Props) {
+export default function ProductDetailImage({ src }: ProductDetailImageProps) {
   const theme = useTheme();
   const renderImage = useMemo(() => {
     return (

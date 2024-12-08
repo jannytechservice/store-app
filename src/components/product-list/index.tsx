@@ -2,16 +2,16 @@ import Grid2 from '@mui/material/Grid2';
 import React, { useCallback, useMemo, useState } from 'react';
 import { Stack } from '@mui/material';
 
-import { IProduct } from '../types/product';
+import { IProduct } from '../../types/product';
 
-import ProductCard from './ProductCard';
-import SearchBar from './ProductList/SearchBar';
+import ProductCard from './product-card';
+import SearchBar from './search-bar';
 
 interface ProductListProps {
   products: IProduct[];
 }
 
-const ProductList: React.FC<ProductListProps> = ({ products }) => {
+export default function ProductList({ products }: ProductListProps) {
   const [search, setSearch] = useState<{ query: string; results: IProduct[] }>({
     query: '',
     results: [],
@@ -80,6 +80,4 @@ const ProductList: React.FC<ProductListProps> = ({ products }) => {
       </Grid2>
     </>
   );
-};
-
-export default ProductList;
+}
