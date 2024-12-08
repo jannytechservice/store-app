@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from 'react';
-import { Container } from '@mui/material';
+import { Container, Typography } from '@mui/material';
 
 import useProductService from '../hook/useProductService';
 import { ProductList } from '../components';
@@ -30,6 +30,14 @@ export default function HomePage() {
         mb: 15,
       }}
     >
+      <Typography
+        variant="h4"
+        sx={{
+          my: { xs: 3, md: 5 },
+        }}
+      >
+        Shop
+      </Typography>
       <ProductList products={products} />
     </Container>
   );

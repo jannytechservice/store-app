@@ -12,3 +12,11 @@ export interface IRating {
   rate: number;
   count: number;
 }
+
+export type IProductFilterValue = string | string[] | number | number[];
+
+export type IProductFilters = {
+  rating: string;
+  category: string;
+  priceRange: number[];
+};

@@ -1,21 +1,48 @@
 import Grid2 from '@mui/material/Grid2';
-import React, { useCallback, useMemo, useState } from 'react';
+import isEqual from 'lodash/isEqual';
+import { useCallback, useMemo, useState } from 'react';
 import { Stack } from '@mui/material';
 
-import { IProduct } from '../../types/product';
+import { useBoolean } from '@/hook/use-boolean';
+import { applyFilter } from '@/utils/apply-filter';
+
+import {
+  IProduct,
+  IProductFilters,
+  IProductFilterValue,
+} from '../../types/product';
 
 import ProductCard from './product-card';
 import SearchBar from './search-bar';
+import ProductSort from './product-sort';
+import ProductFilters from './product-filter';
 
 interface ProductListProps {
   products: IProduct[];
 }
+
+const SORT_OPTIONS = [
+  { value: 'titleDesc', label: 'Title: Low - High' },
+  { value: 'titleAsc', label: 'Title: Low - High' },
+  { value: 'categoryDesc', label: 'Category: High - Low' },
+  { value: 'categoryAsc', label: 'Category: Low - High' },
+];
+const defaultFilters: IProductFilters = {
+  rating: '',
+  category: 'all',
+  priceRange: [0, 200],
+};
+const PRODUCT_RATING_OPTIONS = ['up4Star', 'up3Star', 'up2Star', 'up1Star'];
 
 export default function ProductList({ products }: ProductListProps) {
   const [search, setSearch] = useState<{ query: string; results: IProduct[] }>({
     query: '',
     results: [],
   });
+  const [filters, setFilters] = useState(defaultFilters);
+  const [sortBy, setSortBy] = useState('titleDesc');
+
+  const openFilters = useBoolean();
 
   const handleSearch = useCallback(
     (inputValue: string) => {
@@ -43,6 +70,39 @@ export default function ProductList({ products }: ProductListProps) {
     },
     [products, search.query],
   );
+  const handleFilters = useCallback(
+    (name: string, value: IProductFilterValue) => {
+      setFilters((prevState) => ({
+        ...prevState,
+        [name]: value,
+      }));
+    },
+    [],
+  );
+  const dataFiltered = applyFilter({
+    inputData: products,
+    filters,
+    sortBy,
+  });
+  const handleResetFilters = useCallback(() => {
+    setFilters(defaultFilters);
+  }, []);
+
+  const canReset = !isEqual(defaultFilters, filters);
+
+  const handleSortBy = useCallback((newValue: string) => {
+    setSortBy(newValue);
+  }, []);
+
+  const categories = Array.from(
+    new Set(
+      products
+        .map((product) =>
+          product.category !== 'undefined' ? product.category : null,
+        )
+        .filter((category): category is string => category !== null),
+    ),
+  );
   const renderFilters = useMemo(() => {
     return (
       <Stack
@@ -57,9 +117,41 @@ export default function ProductList({ products }: ProductListProps) {
           onSearch={handleSearch}
           hrefItem={(id: string) => `/products/${id}`}
         />
+        <Stack direction="row" spacing={1} flexShrink={0}>
+          <ProductFilters
+            open={openFilters.value}
+            onOpen={openFilters.onTrue}
+            onClose={openFilters.onFalse}
+            filters={filters}
+            onFilters={handleFilters}
+            canReset={canReset}
+            onResetFilters={handleResetFilters}
+            ratingOptions={PRODUCT_RATING_OPTIONS}
+            categoryOptions={['all', ...categories]}
+          />
+          <ProductSort
+            sort={sortBy}
+            onSort={handleSortBy}
+            sortOptions={SORT_OPTIONS}
+          />
+        </Stack>
       </Stack>
     );
-  }, [handleSearch, search.query, search.results]);
+  }, [
+    canReset,
+    categories,
+    filters,
+    handleFilters,
+    handleResetFilters,
+    handleSearch,
+    handleSortBy,
+    openFilters.onFalse,
+    openFilters.onTrue,
+    openFilters.value,
+    search.query,
+    search.results,
+    sortBy,
+  ]);
 
   return (
     <>
@@ -72,7 +164,7 @@ export default function ProductList({ products }: ProductListProps) {
         {renderFilters}
       </Stack>
       <Grid2 container spacing={2} sx={{ flexGrow: 1 }}>
-        {products.map((product: IProduct) => (
+        {dataFiltered.map((product: IProduct) => (
           <Grid2 size={{ xs: 12, sm: 6, md: 3 }} key={product.id}>
             <ProductCard product={product} />
           </Grid2>
