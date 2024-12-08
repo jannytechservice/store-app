@@ -1,14 +1,14 @@
 import { useCallback, useEffect, useState } from 'react';
+import { Container } from '@mui/material';
 
 import useProductService from '../hook/useProductService';
 import { ProductList } from '../components';
 import { IProduct } from '../types/product';
 import MainLayout from '../layouts/main-layout';
 
-const HomePage = () => {
+export default function HomePage() {
   const [products, setProducts] = useState<IProduct[]>([]);
   const { getProducts } = useProductService();
-  const [loading, setLoading] = useState(true);
 
   const fetchProducts = useCallback(async () => {
     try {
@@ -16,8 +16,6 @@ const HomePage = () => {
       setProducts(response);
     } catch (e) {
       console.error(e);
-    } finally {
-      setLoading(false);
     }
   }, [getProducts]);
 
@@ -26,10 +24,13 @@ const HomePage = () => {
   }, []);
 
   return (
-    <MainLayout loading={loading}>
+    <Container
+      maxWidth="lg"
+      sx={{
+        mb: 15,
+      }}
+    >
       <ProductList products={products} />
-    </MainLayout>
+    </Container>
   );
-};
-
-export default HomePage;
+}

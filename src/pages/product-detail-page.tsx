@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useState } from 'react';
+import { Container } from '@mui/material';
 
 import useProductService from '@/hook/useProductService';
 import { IProduct } from '@/types/product';
@@ -6,9 +7,8 @@ import MainLayout from '@/layouts/main-layout';
 import { ProductDetail } from '@/components';
 import { useParams } from '@/routes/hook';
 
-const ProductDetailPage = () => {
+export default function ProductDetailPage() {
   const { id } = useParams();
-  const [loading, setLoading] = useState(true);
   const [product, setProduct] = useState<IProduct>();
   const { getProduct } = useProductService();
   const fetchProduct = useCallback(async () => {
@@ -19,8 +19,6 @@ const ProductDetailPage = () => {
       }
     } catch (e) {
       console.error(e);
-    } finally {
-      setLoading(false);
     }
   }, [getProduct, id]);
 
@@ -29,10 +27,13 @@ const ProductDetailPage = () => {
   }, []);
 
   return (
-    <MainLayout loading={loading}>
+    <Container
+      maxWidth="lg"
+      sx={{
+        mb: 15,
+      }}
+    >
       {product && <ProductDetail product={product} />}
-    </MainLayout>
+    </Container>
   );
-};
-
-export default ProductDetailPage;
+}

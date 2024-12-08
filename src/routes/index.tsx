@@ -6,7 +6,9 @@ import MainLayout from '@/layouts/main-layout';
 
 function AppRouter() {
   const LazyHomePage = lazy(() => import('@/pages/home-page'));
-  const LazyProductDetailPage = lazy(() => import('@/pages/product-detail-page'));
+  const LazyProductDetailPage = lazy(
+    () => import('@/pages/product-detail-page'),
+  );
 
   return useRoutes([
     {

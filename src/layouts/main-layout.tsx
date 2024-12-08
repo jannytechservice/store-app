@@ -1,19 +1,22 @@
 import React from 'react';
-import { Container } from '@mui/material';
-
-import MainLoader from '../common/loader/MainLoader';
+import { Box } from '@mui/material';
 
 interface MainLayoutProps {
   children: React.ReactNode;
-  loading?: boolean;
 }
 
-const MainLayout: React.FC<MainLayoutProps> = ({ children, loading }) => {
-  return loading ? (
-    <MainLoader />
-  ) : (
-    <Container maxWidth="lg">{children}</Container>
+export default function MainLayout({ children }: MainLayoutProps) {
+  return (
+    <Box sx={{ display: 'flex', flexDirection: 'column', height: 1 }}>
+      <Box
+        component="main"
+        sx={{
+          flexGrow: 1,
+          pt: { xs: 8, md: 10 },
+        }}
+      >
+        {children}
+      </Box>
+    </Box>
   );
-};
-
-export default MainLayout;
+}

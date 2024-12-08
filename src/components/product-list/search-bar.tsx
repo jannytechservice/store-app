@@ -5,7 +5,7 @@ import Avatar from '@mui/material/Avatar';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 import InputAdornment from '@mui/material/InputAdornment';
-import Autocomplete, { autocompleteClasses } from '@mui/material/Autocomplete';
+import Autocomplete from '@mui/material/Autocomplete';
 
 import { useRouter } from '../../routes/hook';
 import Iconify from '../../common/iconify';
