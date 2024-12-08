@@ -1,5 +1,7 @@
 import { useState } from 'react';
 
+import { IProduct } from '@/types/product';
+
 import HttpService from '../services/http.service';
 
 const useProductService = () => {
@@ -12,12 +14,17 @@ const useProductService = () => {
   ).service();
 
   const getProducts = async () => {
-    return await productService.get<any>('/products');
+    return await productService.get<IProduct[]>('/products');
+  };
+
+  const getProduct = async (id: string) => {
+    return await productService.get<IProduct>(`/products/${id}`);
   };
 
   return {
     loading,
     getProducts,
+    getProduct,
   };
 };
 
