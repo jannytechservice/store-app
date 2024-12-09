@@ -1,10 +1,11 @@
 import { lazy, Suspense } from 'react';
-import { BrowserRouter, Outlet, useRoutes } from 'react-router-dom';
+import { Outlet, useRoutes } from 'react-router-dom';
 
 import MainLoader from '@/common/loader/MainLoader';
 import MainLayout from '@/layouts/main-layout';
+import ErrorBoundaryPage from '@/pages/error-boundary-page';
 
-function AppRouter() {
+export default function AppRouter() {
   const LazyHomePage = lazy(() => import('@/pages/home-page'));
   const LazyProductDetailPage = lazy(
     () => import('@/pages/product-detail-page'),
@@ -25,15 +26,11 @@ function AppRouter() {
           path: 'products',
           children: [{ path: ':id', element: <LazyProductDetailPage /> }],
         },
+        {
+          path: '*',
+          element: <ErrorBoundaryPage />,
+        },
       ],
     },
   ]);
-}
-
-export default function Router() {
-  return (
-    <BrowserRouter>
-      <AppRouter />
-    </BrowserRouter>
-  );
 }

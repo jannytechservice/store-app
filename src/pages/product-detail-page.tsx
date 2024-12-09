@@ -1,15 +1,17 @@
 import { useCallback, useEffect, useState } from 'react';
 import { Container } from '@mui/material';
+import { toast } from 'react-toastify';
 
 import useProductService from '@/hook/useProductService';
 import { IProduct } from '@/types/product';
 import { ProductDetail } from '@/components';
 import { useParams } from '@/routes/hook';
+import MainLoader from '@/common/loader/MainLoader';
 
 export default function ProductDetailPage() {
   const { id } = useParams();
   const [product, setProduct] = useState<IProduct>();
-  const { getProduct } = useProductService();
+  const { getProduct, loading } = useProductService();
   const fetchProduct = useCallback(async () => {
     try {
       if (id) {
@@ -17,13 +19,17 @@ export default function ProductDetailPage() {
         setProduct(response);
       }
     } catch (e) {
-      console.error(e);
+      toast.error('An unexpected error occurred');
     }
   }, [getProduct, id]);
 
   useEffect(() => {
     fetchProduct();
   }, []);
+
+  if (loading) {
+    return <MainLoader />;
+  }
 
   return (
     <Container
