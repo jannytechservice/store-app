@@ -1,46 +1,49 @@
-# Getting Started with Create Store App
+# Store App
 
-This project was bootstrapped with [Create Store App](https://github.com/facebook/create-react-app).
+A simple, responsive React web app that displays products from a fake store API. It allows users to view products, sort them by category, view product details on a separate page, and load more products with infinite scroll. This app is mobile responsive and adjusts to different screen sizes.
+
+## Features
+
+- **Product List**: Displays a set of 4 products with images and names, and links to the product detail page.
+- **Responsive Layout**: The product list is displayed in 4 columns on desktop screens, and switches to 2 columns on mobile.
+- **Product Details**: When a product is clicked, users are taken to a product details page.
+- **Infinite Scroll**: More products are loaded as the user scrolls to the bottom of the page.
+- **Sort by Category**: Products can be sorted by category (ascending or descending).
+- **Lazy Loading**: Product images are lazily loaded as the user scrolls.
+
+## Installation
+
+1. Clone the repository to your local machine:
+   ```bash
+   git clone https://github.com/jannytechservice/store-app
+   cd store-app
+   ```
+2. Install dependencies:
+   ```bash
+   npm install
+   ```
+3. Run the app:
+   ```
+   npm start
+   ```
+
+The app will start and can be accessed at http://localhost:3000.
 
 ## Available Scripts
 
-In the project directory, you can run:
+- `npm start`: Starts the development server and opens the app in your browser.
+- `npm run build`: Builds the app for production to the build folder.
+- `npm run lint`: Lints the source files.
+- `npm run lint:fix`: Lints and auto-fixes source files.
+- `npm run format`: Formats the source code using Prettier.
 
-### `npm start`
+## Libraries Used
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
-
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
-
-### `npm test`
-
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create Store App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+- `React`: A JavaScript library for building user interfaces.
+- `Material UI`: For responsive grid layout and UI components.
+- `Axios`: For making HTTP requests to the Fake Store API.
+- `React Router`: For routing between pages (Home and Product Details).
+- `Infinite Scroll`: For dynamically loading more products when the user scrolls.
+- `React Lazy Load Image Component`: For lazy loading of images to improve performance.
+- `Prettier`: For consistent code formatting.
+- `ESLint`: For linting the code.
